@@ -11,10 +11,10 @@ int led2 = 3;         // represents second binary digit
 int led3 = 4;         // represents third binary digit
 int led4 = 5;         // Represents righthand side binary digit
 int joy_sw = A2;      // digital INPUT
-int counter = 0;
+int counter = 0;      // Counters number of button clicks	
 
 void setup() {
-  // put your setup code here, to run once:
+  // Initializes our led pins and begins serial log for debugging
   Serial.begin(9600);
   Serial.println("Start....");
   pinMode(led1, OUTPUT); 
@@ -33,17 +33,20 @@ void loop() {
   if(digitalRead(joy_sw) == LOW){
     delay(250);
     counter++;
-
+    
+    // Sets pinMode of led output to either HIGH or LOW based on counter	
     int d = counter % 2;
     int c = counter / 2 % 2;
     int b = counter/4 % 2;
     int a = counter/8 % 2;
 
+    // Displays the digits via leds
     digitalWrite(led4, d);
     digitalWrite(led3, c);
     digitalWrite(led2, b);
     digitalWrite(led1, a);
     
+    // We only show digits zero to fifteen so at counter == 16, we set it back to zero
     if(counter == 16)
       counter = 0;
       
